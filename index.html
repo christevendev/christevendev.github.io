@@ -887,6 +887,126 @@
                 font-size: 0.8rem;
             }
         }
+
+         @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                margin: 10px;
+                border-radius: 10px;
+            }
+            
+            .header {
+                padding: 15px;
+            }
+            
+            .header h1 {
+                font-size: 1.2rem;
+                margin-top: 30px; /* Space for logo */
+            }
+            
+            .main-title {
+                font-size: 1.1rem;
+                padding: 12px;
+            }
+            
+            .class-info {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+                padding: 12px;
+            }
+            
+            .download-container {
+                flex-direction: column;
+                gap: 10px;
+                width: 100%;
+            }
+            
+            .download-all-btn {
+                width: 100%;
+                margin-left: 0;
+            }
+            
+            /* Mobile-optimized table */
+            table {
+                display: block;
+                width: max-content;
+                max-width: 100%;
+            }
+            
+            th, td {
+                min-width: 80px;
+                padding: 8px 5px;
+                font-size: 0.75rem;
+            }
+            
+            .subject-name {
+                font-size: 0.8rem;
+            }
+            
+            .teacher-name {
+                font-size: 0.7rem;
+            }
+            
+            .legend {
+                padding: 10px;
+                gap: 8px;
+            }
+            
+            .legend-item {
+                font-size: 0.75rem;
+                padding: 5px 10px;
+            }
+            
+            .footer {
+                padding: 15px;
+            }
+            
+            .signature {
+                min-width: 100%;
+                margin-bottom: 15px;
+            }
+            
+            .stamp {
+                width: 60px;
+                height: 60px;
+                font-size: 0.6rem;
+                bottom: 15px;
+                left: 15px;
+            }
+            
+            .logo {
+                width: 50px;
+                height: 50px;
+                top: 15px;
+                left: 15px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .header h1 {
+                font-size: 1.1rem;
+            }
+            
+            .header h2, .header h3 {
+                font-size: 0.9rem;
+            }
+            
+            th, td {
+                min-width: 70px;
+                padding: 6px 3px;
+                font-size: 0.7rem;
+            }
+            
+            .time-slot {
+                position: sticky;
+                left: 0;
+                z-index: 10;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1769,6 +1889,24 @@ ${noteContent}`;
                 if (drawingTab.classList.contains('active')) {
                     setupCanvas();
                 }
+
+                 function handleMobileView() {
+            if (window.innerWidth <= 600px) {
+                document.querySelectorAll('.subject-cell').forEach(cell => {
+                    if (!cell.classList.contains('empty')) {
+                        const subject = cell.querySelector('.subject-name').textContent;
+                        const teacher = cell.querySelector('.teacher-name').textContent;
+                        cell.innerHTML = `
+                            <span class="subject-name">${subject.split(' ')[0]}</span>
+                            <span class="teacher-name">${teacher.split(' ')[0]}</span>
+                        `;
+                    }
+                });
+            }
+        }
+
+                handleMobileView();
+        window.addEventListener('resize', handleMobileView);
             });
         });
     </script>
