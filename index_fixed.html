@@ -1,0 +1,1771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IETI College - Grade 11 STEM D Schedule</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #e6f2ff, #f0f8ff, #e6f2ff);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: #2c3e50;
+        }
+       
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 105, 148, 0.15);
+            overflow: hidden;
+            position: relative;
+            margin: 20px;
+            animation: popIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid #d1e7ff;
+        }
+        
+        @keyframes popIn {
+            0% { transform: scale(0.95); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #c2e0ff, #d9ebff);
+            color: #2c3e50;
+            padding: 25px;
+            text-align: center;
+            border-bottom: 3px solid #a8d0ff;
+            position: relative;
+        }
+        
+        .header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
+            color: #1a5a96;
+        }
+        
+        .header h2 {
+            font-size: 1.4rem;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #2c3e50;
+        }
+              
+        .header h3 {
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #2c3e50;
+        }
+        
+        .main-title {
+            background: linear-gradient(to right, #c2e0ff, #d9ebff, #c2e0ff);
+            color: #1a5a96;
+            padding: 16px;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+            border-bottom: 2px solid #a8d0ff;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .main-title::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            animation: shine 4s infinite;
+        }
+        
+        @keyframes shine {
+            0% { left: -100%; }
+            20% { left: 100%; }
+            100% { left: 100%; }
+        }
+        
+        .class-info {
+            background: linear-gradient(to right, #e6f2ff, #f0f8ff);
+            padding: 16px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #d1e7ff;
+        }
+        
+        .class-section {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #1a5a96;
+            letter-spacing: 0.5px;
+        }
+        
+        .teacher {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #2c3e50;
+            background: rgba(255, 255, 255, 0.7);
+            padding: 8px 15px;
+            border-radius: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            border: 1px solid #d1e7ff;
+        }
+        
+        .schedule-container {
+            overflow-x: auto;
+            padding: 25px;
+            background: #f9fcff;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 4px;
+            margin: 0 auto;
+        }
+        
+        th, td {
+            padding: 14px 10px;
+            text-align: center;
+            vertical-align: middle;
+            min-width: 110px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        th {
+            background: linear-gradient(to bottom, #a8d0ff, #8bb9f0);
+            color: white;
+            font-weight: 600;
+            font-size: 0.95rem;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+            border: 1px solid #8bb9f0;
+        }
+        
+        .saturday-header {
+            background: linear-gradient(to bottom, #8bb9f0, #6d9bd8);
+        }
+        
+        .time-slot {
+            background: linear-gradient(to bottom, #e6f2ff, #d9ebff);
+            font-weight: 600;
+            width: 120px;
+            color: #1a5a96;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            border: 1px solid #d1e7ff;
+        }
+        
+        .subject-cell {
+            font-weight: 600;
+            color: #2c3e50;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e6f2ff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+        }
+        
+        .subject-cell:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 105, 148, 0.15);
+            z-index: 10;
+        }
+        
+        .subject-cell.has-note::after {
+            content: "📝";
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            font-size: 0.9rem;
+        }
+        
+        .subject-cell.has-drawing::after {
+            content: "🎨";
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            font-size: 0.9rem;
+        }
+        
+        .subject-name {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 5px;
+            font-size: 0.95rem;
+        }
+        
+        .teacher-name {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #5a7a9c;
+        }
+        
+        .note-timestamp {
+            font-size: 0.7rem;
+            color: #7d9cbf;
+            display: block;
+            margin-top: 5px;
+            font-style: italic;
+        }
+        
+        .footer {
+            background: linear-gradient(to right, #c2e0ff, #d9ebff);
+            color: #2c3e50;
+            padding: 25px 20px;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 25px;
+            border-top: 3px solid #a8d0ff;
+        }
+        
+        .signature {
+            text-align: center;
+            flex: 1;
+            min-width: 200px;
+            background: rgba(255, 255, 255, 0.6);
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+        }
+        
+        .signature p:first-child {
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            color: #1a5a96;
+        }
+        
+        .signature p:nth-child(2) {
+            font-weight: 500;
+            margin-bottom: 5px;
+            font-size: 1.1rem;
+            padding: 5px 0;
+            border-bottom: 1px dashed rgba(26, 90, 150, 0.3);
+        }
+        
+        .signature p:last-child {
+            font-size: 0.95rem;
+            opacity: 0.9;
+            margin-top: 5px;
+            color: #5a7a9c;
+        }
+        
+        .watermark {
+            position: absolute;
+            bottom: 30px;
+            right: 30px;
+            opacity: 0.03;
+            font-size: 10rem;
+            font-weight: bold;
+            color: #1a5a96;
+            pointer-events: none;
+            transform: rotate(-25deg);
+            z-index: 0;
+            font-family: 'Times New Roman', serif;
+        }
+        
+        .legend {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            padding: 15px;
+            background-color: #f0f8ff;
+            border-top: 1px solid #d1e7ff;
+            border-bottom: 1px solid #d1e7ff;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            padding: 8px 15px;
+            border-radius: 30px;
+            background: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            border: 1px solid #d1e7ff;
+            transition: all 0.3s ease;
+        }
+
+        .legend-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 105, 148, 0.1);
+        }
+        
+        .color-box {
+            width: 20px;
+            height: 20px;
+            border-radius: 5px;
+            background: #e6f2ff;
+            border: 1px solid #d1e7ff;
+        }
+        
+        .stamp {
+            position: absolute;
+            bottom: 25px;
+            left: 25px;
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle, transparent 50%, rgba(168, 208, 255, 0.2) 100%);
+            border: 3px dashed #8bb9f0;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #8bb9f0;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-align: center;
+            text-transform: uppercase;
+            transform: rotate(-15deg);
+            opacity: 0.8;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+        }
+        
+        .asynchronous {
+            background: linear-gradient(to bottom, #f0f8ff, #e6f2ff);
+        }
+        
+        .emptech {
+            background: linear-gradient(to bottom, #e6f2ff, #d9ebff);
+        }
+        
+        .philo {
+            background: linear-gradient(to bottom, #e6f2ff, #d9ebff);
+        }
+        
+        .pre-calculus {
+            background: linear-gradient(to bottom, #e6f2ff, #d9ebff);
+        }
+
+        .kpmkp {
+            background: linear-gradient(to bottom, #e6f2ff, #d9ebff);
+        }
+        
+        .earthalife {
+            background: linear-gradient(to bottom, #e6f2ff, #d9ebff);
+        }
+        
+        .gen-math {
+            background: linear-gradient(to bottom, #e6f2ff, #d9ebff);
+        }
+        
+        .pe-health {
+            background: linear-gradient(to bottom, #e6f2ff, #d9ebff);
+        }
+        
+        .oral-comm {
+            background: linear-gradient(to bottom, #e6f2ff, #d9ebff);
+        }
+        
+        .earth-science {
+            background: linear-gradient(to bottom, #e6f2ff, #d9ebff);
+        }
+        
+        .values-education {
+            background: linear-gradient(to bottom, #e6f2ff, #d9ebff);
+        }
+        
+        .break {
+            background: linear-gradient(to bottom, #f9fcff, #f0f8ff);
+            color: #7d9cbf;
+        }
+        
+        .empty {
+            background: linear-gradient(to bottom, #f9fcff, #f0f8ff);
+        }
+        
+        .subject-cell.empty {
+            cursor: default;
+            box-shadow: none;
+        }
+        
+        .subject-cell.empty:hover {
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .logo {
+            position: absolute;
+            top: 25px;
+            left: 25px;
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(rgba(18, 44, 99, 0.3), rgba(18, 44, 99, 0.3)), 
+                  url('school-logo.png') center center/cover no-repeat;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+            border: 2px solid #d1e7ff;
+        }
+
+        .logo img {
+            .school-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 5px;
+        }
+        }
+        
+        .accent-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: linear-gradient(to right, #8bb9f0, #a8d0ff, #8bb9f0);
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            width: 90%;
+            max-width: 900px;
+            padding: 25px;
+            position: relative;
+            animation: modalSlide 0.4s ease-out;
+            display: flex;
+            flex-direction: column;
+            height: 90vh;
+        }
+        
+        @keyframes modalSlide {
+            0% { transform: translateY(-50px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .modal-title {
+            color: #1a5a96;
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+        
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: #8bb9f0;
+            transition: transform 0.2s;
+        }
+        
+        .close-btn:hover {
+            transform: rotate(90deg);
+            color: #1a5a96;
+        }
+        
+        .note-textarea {
+            width: 100%;
+            height: 200px;
+            padding: 15px;
+            border: 2px solid #d1e7ff;
+            border-radius: 8px;
+            font-size: 1rem;
+            resize: vertical;
+            margin-bottom: 20px;
+            transition: border-color 0.3s;
+        }
+        
+        .note-textarea:focus {
+            border-color: #1a5a96;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(26, 90, 150, 0.2);
+        }
+        
+        .modal-actions {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+            margin-top: auto;
+        }
+        
+        .modal-btn {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .save-btn {
+            background: linear-gradient(to right, #1a5a96, #2c3e90);
+            color: white;
+        }
+        
+        .save-btn:hover {
+            background: linear-gradient(to right, #2c3e90, #1a5a96);
+            transform: translateY(-2px);
+        }
+        
+        .download-btn {
+            background: linear-gradient(to right, #8bb9f0, #a8d0ff);
+            color: white;
+        }
+        
+        .download-btn:hover {
+            background: linear-gradient(to right, #a8d0ff, #8bb9f0);
+            transform: translateY(-2px);
+        }
+        
+        .download-all-btn {
+            background: linear-gradient(to right, #1a5a96, #8bb9f0);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            padding: 12px 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-left: 20px;
+        }
+        
+        .download-all-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .class-info .download-container {
+            display: flex;
+            align-items: center;
+        }
+        
+        .timestamp-info {
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            color: #1a5a96;
+            font-weight: 500;
+        }
+        
+        .drawing-container {
+            display: flex;
+            flex-direction: column;
+            flex: 1; 
+            border: 1px solid #d1e7ff;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .canvas-wrapper {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            background-color: #f9f9f9;
+        }
+        
+        #drawingCanvas {
+            background-color: white;
+            cursor: crosshair;
+            touch-action: none;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .drawing-tools {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background-color: #f0f8ff;
+            border-top: 1px solid #d1e7ff;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .tool-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            border: 2px solid #d1e7ff;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .tool-btn.active {
+            border-color: #1a5a96;
+            background-color: #e6f2ff;
+            transform: scale(1.1);
+        }
+        
+        .tool-btn i {
+            font-size: 18px;
+            color: #1a5a96;
+        }
+        
+        .color-picker {
+            width: 40px;
+            height: 40px;
+            border: none;
+            border-radius: 50%;
+            padding: 0;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid #d1e7ff;
+        }
+        
+        .color-picker::-webkit-color-swatch {
+            border: none;
+            border-radius: 50%;
+            padding: 0;
+        }
+        
+        .color-picker::-webkit-color-swatch-wrapper {
+            padding: 0;
+        }
+        
+        .line-width {
+            width: 120px;
+        }
+        
+        .tool-label {
+            font-weight: 500;
+            color: #5a7a9c;
+            margin-right: 5px;
+        }
+        
+        .drawing-preview {
+            width: 60px;
+            height: 60px;
+            border: 1px solid #d1e7ff;
+            border-radius: 5px;
+            background-color: white;
+            overflow: hidden;
+        }
+        
+        .drawing-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        
+        .tabs {
+            display: flex;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #d1e7ff;
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+            color: #5a7a9c;
+        }
+        
+        .tab.active {
+            border-bottom: 3px solid #1a5a96;
+            color: #1a5a96;
+            font-weight: 600;
+        }
+        
+        .tab-content {
+            display: none;
+            flex: 1;
+            overflow: hidden;
+        }
+        
+        .tab-content.active {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .tool-group {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .drawing-container.fullscreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2000;
+            background: white;
+            border-radius: 0;
+            margin: 0;
+            padding: 20px;
+            box-shadow: none;
+        }
+        
+        .drawing-container.fullscreen .canvas-wrapper {
+            height: calc(100vh - 80px);
+        }
+        
+        .fullscreen-btn {
+            margin-left: auto;
+            background: #1a5a96;
+            color: white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .fullscreen-btn:hover {
+            background: #2c3e90;
+            transform: scale(1.1);
+        }
+        
+        .drawing-container.fullscreen .fullscreen-btn {
+            background: #8bb9f0;
+        }
+        
+        .drawing-container.fullscreen .fullscreen-btn:hover {
+            background: #a8d0ff;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 { font-size: 1.5rem; }
+            .header h2 { font-size: 1.2rem; }
+            .header h3 { font-size: 1rem; }
+            .main-title { font-size: 1.3rem; padding: 12px; }
+            .class-info { flex-direction: column; gap: 12px; text-align: center; }
+            th, td { padding: 10px 8px; font-size: 0.85rem; }
+            .footer { flex-direction: column; align-items: center; gap: 20px; }
+            .stamp { width: 70px; height: 70px; font-size: 0.7rem; }
+            .subject-name { font-size: 0.9rem; }
+            .teacher-name { font-size: 0.8rem; }
+            .logo {
+                width: 60px;
+                height: 60px;
+                top: 20px;
+                left: 20px;
+            }
+            .logo-inner {
+                width: 45px;
+                height: 45px;
+                font-size: 0.9rem;
+            }
+            .modal-content {
+                max-width: 95%;
+                height: 85vh;
+            }
+            .drawing-tools {
+                gap: 8px;
+                padding: 8px;
+            }
+            .tool-btn {
+                width: 35px;
+                height: 35px;
+            }
+            .color-picker {
+                width: 35px;
+                height: 35px;
+            }
+            .line-width {
+                width: 90px;
+            }
+            .drawing-preview {
+                width: 50px;
+                height: 50px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .header { padding: 20px 15px; }
+            .header h1 { font-size: 1.3rem; }
+            .header h2, .header h3 { font-size: 0.9rem; }
+            .main-title { padding: 10px; font-size: 1.1rem; }
+            .class-section, .teacher { font-size: 1rem; }
+            th, td { padding: 8px 6px; font-size: 0.75rem; min-width: 90px; }
+            .watermark { font-size: 6rem; }
+            .legend { flex-direction: column; align-items: center; gap: 10px; }
+            .stamp { width: 60px; height: 60px; font-size: 0.6rem; bottom: 20px; left: 15px; }
+            .logo {
+                width: 50px;
+                height: 50px;
+                top: 15px;
+                left: 15px;
+            }
+            .logo-inner {
+                width: 35px;
+                height: 35px;
+                font-size: 0.8rem;
+            }
+            .modal-content {
+                width: 95%;
+                padding: 15px;
+                height: 80vh;
+            }
+            .modal-title { font-size: 1.2rem; }
+            .note-textarea { height: 150px; }
+            .modal-actions { flex-direction: column; }
+            .tool-btn {
+                width: 32px;
+                height: 32px;
+            }
+            .color-picker {
+                width: 32px;
+                height: 32px;
+            }
+            .line-width {
+                width: 70px;
+            }
+            .drawing-preview {
+                width: 40px;
+                height: 40px;
+            }
+            .fullscreen-btn {
+                width: 35px;
+                height: 35px;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="accent-bar"></div>
+        
+        <div class="logo">
+            <div class="logo-inner">IETI</div>
+        </div>
+        
+        <div class="stamp">
+            OFFICIAL SCHEDULE
+        </div>
+        
+        <div class="watermark">IETI</div>
+        
+        <div class="header">
+            <h1>IETI College of Science and Technology</h1>
+            <h2>School Year 2025 - 2026 (1ST SEMESTER)</h2>
+            <h3>San Pedro City, Laguna</h3>
+        </div>
+        
+        <div class="main-title">
+            GRADE 11 STEM D CLASS SCHEDULE
+        </div>
+        
+        <div class="class-info">
+            <div class="class-section">
+                GRADE 11 STEM D / ROOM 107
+            </div>
+            <div class="download-container">
+                <div class="teacher">
+                    ADVISER: MS. ROZANNE MILLEN MANOZO
+                </div>
+                <button class="download-all-btn" id="downloadAllNotes">
+                    <i class="fas fa-download"></i> Download All Notes
+                </button>
+            </div>
+        </div>
+        
+        <div class="schedule-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>TIME</th>
+                        <th>MONDAY</th>
+                        <th>TUESDAY</th>
+                        <th>WEDNESDAY</th>
+                        <th>THURSDAY</th>
+                        <th>FRIDAY</th>
+                        <th class="saturday-header">SATURDAY</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="time-slot">6:00 - 7:30</td>
+                        <td class="subject-cell empty"></td>
+                        <td class="subject-cell empty"></td>
+                        <td class="subject-cell empty"></td>
+                        <td class="subject-cell empty"></td>
+                        <td class="subject-cell empty"></td>
+                        <td class="subject-cell earth-science" data-day="Saturday" data-time="6:00-7:30">
+                            <span class="subject-name">EARTH SCIENCE</span>
+                            <span class="teacher-name">MR. RB. JUGANAS</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="time-slot">7:30 - 9:00</td>
+                        <td class="subject-cell asynchronous" data-day="Monday" data-time="7:30-9:00">
+                            <span class="subject-name">ASYNCHRONOUS</span>
+                            <span class="teacher-name">EMPTECH</span>
+                        </td>
+                        <td class="subject-cell asynchronous" data-day="Tuesday" data-time="7:30-9:00">
+                            <span class="subject-name">ASYNCHRONOUS</span>
+                            <span class="teacher-name">PHILO</span>
+                        </td>
+                        <td class="subject-cell asynchronous" data-day="Wednesday" data-time="7:30-9:00">
+                            <span class="subject-name">ASYNCHRONOUS</span>
+                            <span class="teacher-name">PRE-CALCULUS</span>
+                        </td>
+                        <td class="subject-cell kpmkp" data-day="Thursday" data-time="7:30-9:00">
+                            <span class="subject-name">KPMKP</span>
+                            <span class="teacher-name">MS. RM. MAÑOZO</span>
+                        </td>
+                        <td class="subject-cell emptech" data-day="Friday" data-time="7:30-9:00">
+                            <span class="subject-name">EMPTECH</span>
+                            <span class="teacher-name">MRS. R. SANTOS</span>
+                        </td>
+                        <td class="subject-cell empty"></td>
+                    </tr>
+                    <tr>
+                        <td class="time-slot">9:00 - 9:30</td>
+                        <td class="subject-cell empty"></td>
+                        <td class="subject-cell empty"></td>
+                        <td class="subject-cell empty"></td>
+                        <td class="subject-cell break">
+                            <span class="subject-name">BREAK</span>
+                        </td>
+                        <td class="subject-cell empty"></td>
+                        <td class="subject-cell empty"></td>
+                    </tr>
+                    <tr>
+                        <td class="time-slot">9:30 - 11:00</td>
+                        <td class="subject-cell asynchronous" data-day="Monday" data-time="9:30-11:00">
+                            <span class="subject-name">ASYNCHRONOUS</span>
+                            <span class="teacher-name">EARTH & LIFE</span>
+                        </td>
+                        <td class="subject-cell asynchronous" data-day="Tuesday" data-time="9:30-11:00">
+                            <span class="subject-name">ASYNCHRONOUS</span>
+                            <span class="teacher-name">GEN. MATH</span>
+                        </td>
+                        <td class="subject-cell asynchronous" data-day="Wednesday" data-time="9:30-11:00">
+                            <span class="subject-name">ASYNCHRONOUS</span>
+                            <span class="teacher-name">PE & HEALTH 1</span>
+                        </td>
+                        <td class="subject-cell gen-math" data-day="Thursday" data-time="9:30-11:00">
+                            <span class="subject-name">GEN. MATH</span>
+                            <span class="teacher-name">MS. JM. ROJO</span>
+                        </td>
+                        <td class="subject-cell gen-math" data-day="Friday" data-time="9:30-11:00">
+                            <span class="subject-name">GEN. MATH</span>
+                            <span class="teacher-name">MS. JM. ROJO</span>
+                        </td>
+                        <td class="subject-cell pre-calculus" data-day="Saturday" data-time="9:30-11:00">
+                            <span class="subject-name">PRE-CALCULUS</span>
+                            <span class="teacher-name">MS. A. PEÑALOSA</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="time-slot">11:00 - 12:30</td>
+                        <td class="subject-cell asynchronous" data-day="Monday" data-time="11:00-12:30">
+                            <span class="subject-name">ASYNCHRONOUS</span>
+                            <span class="teacher-name">KPMKP</span>
+                        </td>
+                        <td class="subject-cell asynchronous" data-day="Tuesday" data-time="11:00-12:30">
+                            <span class="subject-name">ASYNCHRONOUS</span>
+                            <span class="teacher-name">ORAL COMM.</span>
+                        </td>
+                        <td class="subject-cell empty"></td>
+                        <td class="subject-cell emptech" data-day="Thursday" data-time="11:00-12:30">
+                            <span class="subject-name">EMPTECH</span>
+                            <span class="teacher-name">MRS. R. SANTOS</span>
+                        </td>
+                        <td class="subject-cell earth-science" data-day="Friday" data-time="11:00-12:30">
+                            <span class="subject-name">EARTH SCIENCE</span>
+                            <span class="teacher-name">MR. RB. JUGANAS</span>
+                        </td>
+                        <td class="subject-cell empty"></td>
+                    </tr>
+                    <tr>
+                        <td class="time-slot">12:30 - 1:30</td>
+                        <td class="subject-cell empty"></td>
+                        <td class="subject-cell empty"></td>
+                        <td class="subject-cell empty"></td>
+                        <td class="subject-cell empty"></td>
+                        <td class="subject-cell break">
+                            <span class="subject-name">BREAK</span>
+                        </td>
+                        <td class="subject-cell empty"></td>
+                    </tr>
+                    <tr>
+                        <td class="time-slot">1:30 - 3:00</td>
+                        <td class="subject-cell empty"></td>
+                        <td class="subject-cell empty"></td>
+                        <td class="subject-cell empty"></td>
+                        <td class="subject-cell oral-comm" data-day="Thursday" data-time="1:30-3:00">
+                            <span class="subject-name">ORAL COMM.</span>
+                            <span class="teacher-name">MR. CD. BABAS</span>
+                        </td>
+                        <td class="subject-cell pe-health" data-day="Friday" data-time="1:30-3:00">
+                            <span class="subject-name">PE & HEALTH 1</span>
+                            <span class="teacher-name">MS. H. PAILE</span>
+                        </td>
+                        <td class="subject-cell values-education" data-day="Saturday" data-time="1:30-3:00">
+                            <span class="subject-name">VALUES EDUCATION</span>
+                            <span class="teacher-name">MS. H. PAILE</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="time-slot">3:00 - 4:30</td>
+                        <td class="subject-cell empty"></td>
+                        <td class="subject-cell empty"></td>
+                        <td class="subject-cell empty"></td>
+                        <td class="subject-cell kpmkp" data-day="Thursday" data-time="3:00-4:30">
+                            <span class="subject-name">KPMKP</span>
+                            <span class="teacher-name">MS. RM. MAÑOZO</span>
+                        </td>
+                        <td class="subject-cell oral-comm" data-day="Friday" data-time="3:00-4:30">
+                            <span class="subject-name">ORAL COMM.</span>
+                            <span class="teacher-name">MR. CD. BABAS</span>
+                        </td>
+                        <td class="subject-cell philo" data-day="Saturday" data-time="3:00-4:30">
+                            <span class="subject-name">PHILO</span>
+                            <span class="teacher-name">MR. R. SALCEDO</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="time-slot">4:30 - 6:00</td>
+                        <td class="subject-cell empty"></td>
+                        <td class="subject-cell empty"></td>
+                        <td class="subject-cell empty"></td>
+                        <td class="subject-cell philo" data-day="Thursday" data-time="4:30-6:00">
+                            <span class="subject-name">PHILO</span>
+                            <span class="teacher-name">MR. R. SALCEDO</span>
+                        </td>
+                        <td class="subject-cell empty"></td>
+                        <td class="subject-cell empty"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="legend">
+            <div class="legend-item">
+                <div class="color-box" style="background: #f0f8ff;"></div>
+                <span>ASYNCHRONOUS</span>
+            </div>
+            <div class="legend-item">
+                <div class="color-box" style="background: #e6f2ff;"></div>
+                <span>EMPTECH</span>
+            </div>
+            <div class="legend-item">
+                <div class="color-box" style="background: #e6f2ff;"></div>
+                <span>PHILO</span>
+            </div>
+            <div class="legend-item">
+                <div class="color-box" style="background: #e6f2ff;"></div>
+                <span>PRE-CALCULUS</span>
+            </div>
+            <div class="legend-item">
+                <div class="color-box" style="background: #e6f2ff;"></div>
+                <span>KPMKP</span>
+            </div>
+            <div class="legend-item">
+                <div class="color-box" style="background: #e6f2ff;"></div>
+                <span>EARTH & LIFE</span>
+            </div>
+            <div class="legend-item">
+                <div class="color-box" style="background: #e6f2ff;"></div>
+                <span>GEN. MATH</span>
+            </div>
+            <div class="legend-item">
+                <div class="color-box" style="background: #e6f2ff;"></div>
+                <span>PE & HEALTH 1</span>
+            </div>
+            <div class="legend-item">
+                <div class="color-box" style="background: #e6f2ff;"></div>
+                <span>ORAL COMM.</span>
+            </div>
+            <div class="legend-item">
+                <div class="color-box" style="background: #e6f2ff;"></div>
+                <span>EARTH SCIENCE</span>
+            </div>
+            <div class="legend-item">
+                <div class="color-box" style="background: #e6f2ff;"></div>
+                <span>VALUES EDUCATION</span>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <div class="signature">
+                <p>Prepared by:</p>
+                <p>IRA B. ALMONGUERA</p>
+                <p>SHS Head</p>
+            </div>
+            <div class="signature">
+                <p>Approved by:</p>
+                <p>DR. LYNDA P. PARREÑO</p>
+                <p>BED Principal</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal" id="noteModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle">Subject Notes</h2>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div class="timestamp-info" id="timestampInfo">
+                Last saved: <span id="lastSavedTime">Never</span>
+            </div>
+           
+            <div class="tabs">
+                <div class="tab active" data-tab="text">Text Note</div>
+                <div class="tab" data-tab="drawing">Canvas</div>
+            </div>
+            
+            <div class="tab-content active" id="textTab">
+                <textarea class="note-textarea" id="noteTextarea" placeholder="Enter your notes here..."></textarea>
+            </div>
+            
+             <div class="tab-content" id="drawingTab">
+                <div class="drawing-container" id="drawingContainer">
+                    <div class="canvas-wrapper">
+                        <canvas id="drawingCanvas"></canvas>
+                    </div>
+                    <div class="drawing-tools">
+                        <div class="tool-group">
+                            <div class="tool-btn active" id="penTool" title="Pen">
+                                <i class="fas fa-pen"></i>
+                            </div>
+                            <div class="tool-btn" id="eraserTool" title="Eraser">
+                                <i class="fas fa-eraser"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="tool-group">
+                            <span class="tool-label">Color:</span>
+                            <input type="color" id="drawingColor" class="color-picker" value="#000000">
+                        </div>
+                        
+                        <div class="tool-group">
+                            <span class="tool-label">Size:</span>
+                            <input type="range" id="lineWidth" class="line-width" min="1" max="20" value="5">
+                        </div>
+                        
+                        <div class="tool-group">
+                            <button id="clearCanvas" class="tool-btn" title="Clear Canvas">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="tool-group">
+                            <span class="tool-label">Preview:</span>
+                            <div class="drawing-preview" id="drawingPreview"></div>
+                        </div>
+                        
+                        <div class="tool-group">
+                            <div class="fullscreen-btn" id="fullscreenBtn" title="Toggle Fullscreen">
+                                <i class="fas fa-expand"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-actions">
+                <button class="modal-btn save-btn" id="saveNote">Save Note</button>
+                <button class="modal-btn download-btn" id="downloadTextNote">
+                    <i class="fas fa-download"></i> Download Text Note
+                </button>
+                <button class="modal-btn download-btn" id="downloadDrawingNote">
+                    <i class="fas fa-download"></i> Download Drawing
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const subjectCells = document.querySelectorAll('.subject-cell:not(.empty)');
+            const noteModal = document.getElementById('noteModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const noteTextarea = document.getElementById('noteTextarea');
+            const saveNoteBtn = document.getElementById('saveNote');
+            const downloadTextNoteBtn = document.getElementById('downloadTextNote');
+            const downloadDrawingNoteBtn = document.getElementById('downloadDrawingNote');
+            const downloadAllNotesBtn = document.getElementById('downloadAllNotes');
+            const closeBtn = document.querySelector('.close-btn');
+            const lastSavedTime = document.getElementById('lastSavedTime');
+            const tabs = document.querySelectorAll('.tab');
+            const textTab = document.getElementById('textTab');
+            const drawingTab = document.getElementById('drawingTab');
+            const drawingContainer = document.getElementById('drawingContainer');
+            const fullscreenBtn = document.getElementById('fullscreenBtn');
+            
+            const canvas = document.getElementById('drawingCanvas');
+            const ctx = canvas.getContext('2d');
+            const penTool = document.getElementById('penTool');
+            const eraserTool = document.getElementById('eraserTool');
+            const drawingColor = document.getElementById('drawingColor');
+            const lineWidth = document.getElementById('lineWidth');
+            const clearCanvasBtn = document.getElementById('clearCanvas');
+            const drawingPreview = document.getElementById('drawingPreview');
+            
+            let currentCell = null;
+            let isDrawing = false;
+            let lastX = 0;
+            let lastY = 0;
+            let currentTool = 'pen';
+            let currentColor = '#000000';
+            let currentLineWidth = 5;
+            let isFullscreen = false;
+           
+            function formatDateTime(date) {
+                const options = { 
+                    year: 'numeric', 
+                    month: 'short', 
+                    day: 'numeric',
+                    hour: '2-digit', 
+                    minute: '2-digit'
+                };
+                return date.toLocaleString(undefined, options);
+            }
+            
+            function getNoteData(key) {
+                const data = localStorage.getItem(key);
+                return data ? JSON.parse(data) : null;
+            }
+            
+            function saveNoteData(key, content, drawingData = null) {
+                const now = new Date();
+                const noteData = {
+                    content: content,
+                    drawing: drawingData,
+                    timestamp: now.toISOString(),
+                    formatted: formatDateTime(now)
+                };
+                localStorage.setItem(key, JSON.stringify(noteData));
+                return noteData;
+            }
+          
+            subjectCells.forEach(cell => {
+                const day = cell.dataset.day;
+                const time = cell.dataset.time;
+                const key = `${day}-${time}`;
+                const noteData = getNoteData(key);
+                
+                if (noteData) {
+                    if (noteData.content && noteData.content.trim()) {
+                        cell.classList.add('has-note');
+                    }
+                    if (noteData.drawing) {
+                        cell.classList.add('has-drawing');
+                    }
+                    
+                    const timestampEl = document.createElement('span');
+                    timestampEl.className = 'note-timestamp';
+                    timestampEl.textContent = noteData.formatted;
+                    cell.appendChild(timestampEl);
+                }
+            });
+            
+            const rows = document.querySelectorAll('tbody tr');
+            rows.forEach((row, index) => {
+                setTimeout(() => {
+                    row.style.opacity = '0';
+                    row.style.transform = 'translateY(20px)';
+                    row.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+                    
+                    setTimeout(() => {
+                        row.style.opacity = '1';
+                        row.style.transform = 'translateY(0)';
+                    }, 50);
+                }, 150 * index);
+            });
+            
+            subjectCells.forEach(cell => {
+                cell.addEventListener('mouseenter', () => {
+                    cell.style.transform = 'scale(1.03)';
+                    cell.style.boxShadow = '0 6px 15px rgba(0, 105, 148, 0.2)';
+                    cell.style.zIndex = '10';
+                });
+                
+                cell.addEventListener('mouseleave', () => {
+                    cell.style.transform = 'scale(1)';
+                    cell.style.boxShadow = '0 2px 5px rgba(0, 0, 0, 0.05)';
+                    cell.style.zIndex = '1';
+                });
+                
+                cell.addEventListener('click', function() {
+                    const subjectName = this.querySelector('.subject-name').textContent;
+                    const day = this.dataset.day;
+                    const time = this.dataset.time;
+                    const key = `${day}-${time}`;
+                    
+                    currentCell = this;
+                    modalTitle.textContent = `${subjectName} on ${day} (${time})`;
+                    
+                    const noteData = getNoteData(key);
+                    noteTextarea.value = noteData ? noteData.content : '';
+                    
+                    lastSavedTime.textContent = noteData ? noteData.formatted : 'Never';
+                    
+                    setupCanvas();
+                    
+                    if (noteData && noteData.drawing) {
+                        loadDrawing(noteData.drawing);
+                    } else {
+                        clearCanvasDrawing();
+                    }
+                    
+                    noteModal.style.display = 'flex';
+                });
+            });
+        
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const tabId = this.dataset.tab;
+                    textTab.classList.remove('active');
+                    drawingTab.classList.remove('active');
+                    
+                    if (tabId === 'text') {
+                        textTab.classList.add('active');
+                    } else {
+                        drawingTab.classList.add('active');
+                        setTimeout(setupCanvas, 50);
+                    }
+                });
+            });
+            
+            function setupCanvas() {
+                const container = drawingTab.querySelector('.canvas-wrapper');
+                canvas.width = container.clientWidth;
+                canvas.height = container.clientHeight;
+                
+                ctx.lineJoin = 'round';
+                ctx.lineCap = 'round';
+                ctx.lineWidth = currentLineWidth;
+                ctx.strokeStyle = currentColor;
+               
+                drawGridBackground();
+            }
+            
+            function drawGridBackground() {
+                const gridSize = 20;
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                ctx.save();
+                ctx.strokeStyle = '#e6f2ff';
+                ctx.lineWidth = 1;
+                
+                for (let x = 0; x <= canvas.width; x += gridSize) {
+                    ctx.beginPath();
+                    ctx.moveTo(x, 0);
+                    ctx.lineTo(x, canvas.height);
+                    ctx.stroke();
+                }
+                
+                for (let y = 0; y <= canvas.height; y += gridSize) {
+                    ctx.beginPath();
+                    ctx.moveTo(0, y);
+                    ctx.lineTo(canvas.width, y);
+                    ctx.stroke();
+                }
+                
+                ctx.restore();
+            }
+           
+            function startDrawing(e) {
+                isDrawing = true;
+                [lastX, lastY] = [e.offsetX, e.offsetY];
+            }
+            
+            function draw(e) {
+                if (!isDrawing) return;
+                
+                ctx.beginPath();
+                ctx.moveTo(lastX, lastY);
+                ctx.lineTo(e.offsetX, e.offsetY);
+                ctx.stroke();
+                [lastX, lastY] = [e.offsetX, e.offsetY];
+                
+                updatePreview();
+            }
+            
+            function stopDrawing() {
+                isDrawing = false;
+                updatePreview();
+            }
+          
+            canvas.addEventListener('mousedown', startDrawing);
+            canvas.addEventListener('mousemove', draw);
+            canvas.addEventListener('mouseup', stopDrawing);
+            canvas.addEventListener('mouseout', stopDrawing);
+            
+            canvas.addEventListener('touchstart', e => {
+                e.preventDefault();
+                const touch = e.touches[0];
+                const rect = canvas.getBoundingClientRect();
+                const offsetX = touch.clientX - rect.left;
+                const offsetY = touch.clientY - rect.top;
+                
+                const mouseEvent = new MouseEvent('mousedown', {
+                    clientX: touch.clientX,
+                    clientY: touch.clientY,
+                    offsetX: offsetX,
+                    offsetY: offsetY
+                });
+                canvas.dispatchEvent(mouseEvent);
+            });
+            
+            canvas.addEventListener('touchmove', e => {
+                e.preventDefault();
+                const touch = e.touches[0];
+                const rect = canvas.getBoundingClientRect();
+                const offsetX = touch.clientX - rect.left;
+                const offsetY = touch.clientY - rect.top;
+                
+                const mouseEvent = new MouseEvent('mousemove', {
+                    clientX: touch.clientX,
+                    clientY: touch.clientY,
+                    offsetX: offsetX,
+                    offsetY: offsetY
+                });
+                canvas.dispatchEvent(mouseEvent);
+            });
+            
+            canvas.addEventListener('touchend', e => {
+                e.preventDefault();
+                const mouseEvent = new MouseEvent('mouseup', {});
+                canvas.dispatchEvent(mouseEvent);
+            });
+            
+            penTool.addEventListener('click', () => {
+                setActiveTool('pen');
+                ctx.globalCompositeOperation = 'source-over';
+                ctx.strokeStyle = currentColor;
+            });
+            
+            eraserTool.addEventListener('click', () => {
+                setActiveTool('eraser');
+                ctx.globalCompositeOperation = 'destination-out';
+                ctx.strokeStyle = 'rgba(0,0,0,1)';
+            });
+            
+            drawingColor.addEventListener('input', () => {
+                currentColor = drawingColor.value;
+                if (currentTool === 'pen') {
+                    ctx.strokeStyle = currentColor;
+                }
+            });
+            
+            lineWidth.addEventListener('input', () => {
+                currentLineWidth = lineWidth.value;
+                ctx.lineWidth = currentLineWidth;
+            });
+            
+            clearCanvasBtn.addEventListener('click', clearCanvasDrawing);
+            
+            function setActiveTool(tool) {
+                currentTool = tool;
+                penTool.classList.remove('active');
+                eraserTool.classList.remove('active');
+                
+                if (tool === 'pen') {
+                    penTool.classList.add('active');
+                } else {
+                    eraserTool.classList.add('active');
+                }
+            }
+            
+            function clearCanvasDrawing() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                drawGridBackground();
+                updatePreview();
+            }
+            
+            function updatePreview() {
+                const previewImg = new Image();
+                previewImg.src = canvas.toDataURL();
+                previewImg.onload = function() {
+                    drawingPreview.innerHTML = '';
+                    drawingPreview.appendChild(previewImg);
+                };
+            }
+            
+            function loadDrawing(dataURL) {
+                const img = new Image();
+                img.onload = function() {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    drawGridBackground();
+                    ctx.drawImage(img, 0, 0);
+                    updatePreview();
+                };
+                img.src = dataURL;
+            }
+            
+            fullscreenBtn.addEventListener('click', toggleFullscreen);
+            
+            function toggleFullscreen() {
+                if (!isFullscreen) {
+                    enterFullscreen();
+                } else {
+                    exitFullscreen();
+                }
+            }
+            
+            function enterFullscreen() {
+                drawingContainer.classList.add('fullscreen');
+                isFullscreen = true;
+                fullscreenBtn.innerHTML = '<i class="fas fa-compress"></i>';
+                setupCanvas();
+            }
+            
+            function exitFullscreen() {
+                drawingContainer.classList.remove('fullscreen');
+                isFullscreen = false;
+                fullscreenBtn.innerHTML = '<i class="fas fa-expand"></i>';
+                setupCanvas();
+            }
+            
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && isFullscreen) {
+                    exitFullscreen();
+                }
+            });
+           
+            saveNoteBtn.addEventListener('click', function() {
+                if (!currentCell) return;
+                
+                const day = currentCell.dataset.day;
+                const time = currentCell.dataset.time;
+                const key = `${day}-${time}`;
+                const noteContent = noteTextarea.value;
+            
+                const drawingData = canvas.toDataURL();
+                
+                if (noteContent.trim() || drawingData) {
+                    const noteData = saveNoteData(key, noteContent, drawingData);
+                    
+                    currentCell.classList.remove('has-note', 'has-drawing');
+                    
+                    if (noteContent.trim()) {
+                        currentCell.classList.add('has-note');
+                    }
+                    
+                    if (drawingData) {
+                        currentCell.classList.add('has-drawing');
+                    }
+                    
+                    let timestampEl = currentCell.querySelector('.note-timestamp');
+                    if (!timestampEl) {
+                        timestampEl = document.createElement('span');
+                        timestampEl.className = 'note-timestamp';
+                        currentCell.appendChild(timestampEl);
+                    }
+                    timestampEl.textContent = noteData.formatted;
+                    
+                    lastSavedTime.textContent = noteData.formatted;
+                    
+                    const originalText = saveNoteBtn.textContent;
+                    saveNoteBtn.innerHTML = '<i class="fas fa-check"></i> Saved!';
+                    setTimeout(() => {
+                        saveNoteBtn.innerHTML = originalText;
+                    }, 2000);
+                } else {
+                    localStorage.removeItem(key);
+                    currentCell.classList.remove('has-note', 'has-drawing');
+                    
+                    const timestampEl = currentCell.querySelector('.note-timestamp');
+                    if (timestampEl) {
+                        timestampEl.remove();
+                    }
+                    
+                    lastSavedTime.textContent = 'Never';
+                }
+            });
+            
+            downloadTextNoteBtn.addEventListener('click', function() {
+                if (!currentCell) return;
+
+                const subjectName = currentCell.querySelector('.subject-name').textContent;
+                const day = currentCell.dataset.day;
+                const time = currentCell.dataset.time;
+                const noteContent = noteTextarea.value;
+
+                if (!noteContent.trim()) {
+                    alert('No text note to download!');
+                    return;
+                }
+                
+                const key = `${day}-${time}`;
+                const noteData = getNoteData(key);
+                const lastSaved = noteData ? noteData.formatted : 'Not saved yet';
+                const downloadTime = formatDateTime(new Date());
+
+                const filename = `${subjectName} Notes (${day} ${time}).txt`;
+                const fileContent = 
+                `Subject: ${subjectName}
+Day: ${day}
+Time: ${time}
+Last Saved: ${lastSaved}
+Downloaded: ${downloadTime}
+
+Notes:
+${noteContent}`;
+
+                downloadTextFile(fileContent, filename);
+            });
+            
+            downloadDrawingNoteBtn.addEventListener('click', function() {
+                if (!currentCell) return;
+                
+                const subjectName = currentCell.querySelector('.subject-name').textContent;
+                const day = currentCell.dataset.day;
+                const time = currentCell.dataset.time;
+                const key = `${day}-${time}`;
+                const drawingData = canvas.toDataURL();
+
+                if (!drawingData) {
+                    alert('No drawing to download!');
+                    return;
+                }
+                const filename = `${subjectName} Drawing (${day} ${time}).png`;
+                downloadImageFile(drawingData, filename);
+            });
+
+            downloadAllNotesBtn.addEventListener('click', function() {
+                const notes = [];
+                let noteCount = 0;
+                
+                subjectCells.forEach(cell => {
+                    const day = cell.dataset.day;
+                    const time = cell.dataset.time;
+                    const key = `${day}-${time}`;
+                    const noteData = getNoteData(key);
+                    
+                    if (noteData) {
+                        const subjectName = cell.querySelector('.subject-name').textContent;
+                        const teacherName = cell.querySelector('.teacher-name').textContent;
+                        
+                        notes.push(`Subject: ${subjectName}`);
+                        notes.push(`Teacher: ${teacherName}`);
+                        notes.push(`Day: ${day}`);
+                        notes.push(`Time: ${time}`);
+                        notes.push(`Last Saved: ${noteData.formatted}`);
+                        notes.push(`Notes:\n${noteData.content || 'No text note'}`);
+                        notes.push('-'.repeat(60));
+                        
+                        noteCount++;
+                    }
+                });
+                
+                if (noteCount === 0) {
+                    alert('No notes to download!');
+                    return;
+                }
+                
+                const filename = `All_Notes_${new Date().toISOString().slice(0, 10)}.txt`;
+                const fileContent = notes.join('\n');
+                
+                downloadTextFile(fileContent, filename);
+            });
+            
+            closeBtn.addEventListener('click', function() {
+                noteModal.style.display = 'none';
+                if (isFullscreen) {
+                    exitFullscreen();
+                }
+            });
+            
+            window.addEventListener('click', function(event) {
+                if (event.target === noteModal) {
+                    noteModal.style.display = 'none';
+                    if (isFullscreen) {
+                        exitFullscreen();
+                    }
+                }
+            });
+            
+            function downloadTextFile(content, filename) {
+                const blob = new Blob([content], { type: 'text/plain' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                setTimeout(() => {
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                }, 100);
+            }
+            
+            function downloadImageFile(dataUrl, filename) {
+                const a = document.createElement('a');
+                a.href = dataUrl;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            }
+            
+            window.addEventListener('resize', function() {
+                if (drawingTab.classList.contains('active')) {
+                    setupCanvas();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
