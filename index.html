@@ -1885,30 +1885,30 @@ ${noteContent}`;
                 document.body.removeChild(a);
             }
             
-            window.addEventListener('resize', function() {
-                if (drawingTab.classList.contains('active')) {
-                    setupCanvas();
-                }
-
-                 function handleMobileView() {
-            if (window.innerWidth <= 600px) {
-                document.querySelectorAll('.subject-cell').forEach(cell => {
-                    if (!cell.classList.contains('empty')) {
-                        const subject = cell.querySelector('.subject-name').textContent;
-                        const teacher = cell.querySelector('.teacher-name').textContent;
-                        cell.innerHTML = `
-                            <span class="subject-name">${subject.split(' ')[0]}</span>
-                            <span class="teacher-name">${teacher.split(' ')[0]}</span>
-                        `;
-                    }
-                });
+           function handleMobileView() {
+    if (window.innerWidth <= 600) {
+        document.querySelectorAll('.subject-cell').forEach(cell => {
+            if (!cell.classList.contains('empty')) {
+                const subject = cell.querySelector('.subject-name')?.textContent ?? '';
+                const teacher = cell.querySelector('.teacher-name')?.textContent ?? '';
+                cell.innerHTML = `
+                    <span class="subject-name">${subject.split(' ')[0]}</span>
+                    <span class="teacher-name">${teacher.split(' ')[0]}</span>
+                `;
             }
-        }
-
-                handleMobileView();
-        window.addEventListener('resize', handleMobileView);
-            });
         });
+    }
+}
+
+handleMobileView();
+window.addEventListener('resize', () => {
+    if (drawingTab.classList.contains('active')) {
+        setupCanvas();
+    }
+    handleMobileView();
+});
+            document.addEventListener('DOMContentLoaded', setupCanvas);
+        });        
     </script>
 </body>
 </html>
